@@ -1,30 +1,32 @@
-FROM ubuntu:14.04
+FROM phusion/passenger-ruby22:0.9.17
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV RAILS_ENV production
 
-RUN apt-get update
-RUN apt-get -y install software-properties-common python-software-properties
-RUN apt-add-repository ppa:brightbox/ruby-ng
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get -y install build-essential ruby2.2 ruby2.2-dev ruby-switch git imagemagick libpq5 libpq-dev libhiredis-dev
-RUN ruby-switch --set ruby2.2
+RUN apt-get -q update
+RUN apt-get -qy upgrade
+RUN apt-get install -qy libhiredis-dev
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN gem install bundler
+ADD nginx.conf /etc/nginx/sites-enabled/opensnp.org.conf
+RUN rm /etc/nginx/sites-enabled/default
+RUN rm -f /etc/service/nginx/down
 
-#ENV GEM_HOME $HOME/gems
-RUN mkdir -p /srv/www
-RUN useradd -m -d /srv/www/snpr snpr
 
-RUN git clone https://github.com/gedankenstuecke/snpr.git /srv/www/snpr/current
+RUN git clone --depth=1 --branch=dockerize https://github.com/tsujigiri/snpr.git /home/app/snpr
+WORKDIR /home/app/snpr
+RUN rm -rf .git
+RUN chown app:app -R /home/app
 
-WORKDIR /srv/www/snpr/current
-
-RUN bundle
+USER app
 
 ADD database.yml config/database.yml
-ADD app_config.yml config/app_config.yml
-ADD secret_token secret_token
-ADD secret_key_base secret_key_base
-RUN mkdir log
-RUN mkdir -p tmp/pids
+RUN bundle install --deployment --without test development
+RUN cp .env.example .env
+RUN bundle exec rake assets:precompile
+RUN rm .env
+
+USER root
+
+RUN bin/extract_env_var_names_for_nginx > /etc/nginx/main.d/rails-env.conf
+
+CMD ["/sbin/my_init"]
