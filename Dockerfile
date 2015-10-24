@@ -11,7 +11,6 @@ ADD nginx.conf /etc/nginx/sites-enabled/opensnp.org.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
 
-
 RUN git clone --depth=1 --branch=dockerize https://github.com/tsujigiri/snpr.git /home/app/snpr
 WORKDIR /home/app/snpr
 RUN rm -rf .git
