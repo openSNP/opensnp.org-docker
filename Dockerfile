@@ -8,6 +8,8 @@ RUN apt-get install -qy libhiredis-dev postgresql-client-9.3
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD nginx.conf /etc/nginx/sites-enabled/opensnp.org.conf
+ADD opensnp.org.crt /etc/ssl/certs/opensnp.org.crt
+ADD opensnp.key /etc/ssl/private/opensnp.org.key
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
 
