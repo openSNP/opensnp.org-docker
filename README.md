@@ -4,11 +4,11 @@ Currently two images - a *opensnp.org-docker* image and a *dev* image. The *open
 
 # How to build the images
 
-In a screen session:
+Start the docker server (screen/tmux/service if your system supports that)
 
     docker daemon
 
-to run the docker server. Then in the root folder:
+Then in the root folder:
 
     docker build -t opensnp.org-docker .
 
@@ -23,12 +23,15 @@ To see all images:
 
     docker images
 
-should show two images, one named *opensnp.org-docker* and one named *dev*.
+This should show two images, one named *opensnp.org-docker* and one named *dev*.
 
 Now you can either build a container based on the *dev* image or on the *opensnp.org-docker* image.
 
 # Building the dev container
 
-    docker create dev
     docker run dev
+
+To run with environmental variables, in this case setting FOO to bar:
+
+    docker run -e FOO=bar dev
 
