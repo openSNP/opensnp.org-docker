@@ -1,4 +1,4 @@
-FROM opensnp.org-docker
+FROM opensnp/rails
 
 ENV RAILS_ENV development
 
