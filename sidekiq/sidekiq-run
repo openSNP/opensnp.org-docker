@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /home/app/snpr
+exec 2>&1
+exec chpst -u app bundle exec sidekiq -e production -P /var/run/sidekiq/sidekiq.pid
