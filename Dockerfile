@@ -7,7 +7,7 @@ RUN apt-get -qy upgrade
 RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 sendmail
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD nginx-custom.conf /etc/nginx/conf.d/custom.conf
+ADD nginx-http.conf /etc/nginx/conf.d/http.conf
 ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
