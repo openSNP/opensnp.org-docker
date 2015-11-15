@@ -4,7 +4,7 @@ ENV RAILS_ENV production
 
 RUN apt-get -q update
 RUN apt-get -qy upgrade
-RUN apt-get install -qy libhiredis-dev postgresql-client-9.3
+RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 sendmail
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD nginx-custom.conf /etc/nginx/conf.d/custom.conf
