@@ -7,6 +7,11 @@ RUN apt-get -qy upgrade
 RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 sendmail
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Enable STARTTLS for sendmail
+RUN echo "include(\`/etc/mail/tls/starttls.m4')dnl" >> /etc/mail/sendmail.mc
+RUN sendmailconfig
+RUN service sendmail restart
+
 ADD nginx-http.conf /etc/nginx/conf.d/http.conf
 ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
 RUN rm /etc/nginx/sites-enabled/default
