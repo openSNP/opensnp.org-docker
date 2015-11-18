@@ -4,13 +4,12 @@ ENV RAILS_ENV production
 
 RUN apt-get -q update
 RUN apt-get -qy upgrade
-RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 sendmail
+RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
+RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 postfix
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Enable STARTTLS for sendmail
-RUN echo "include(\`/etc/mail/tls/starttls.m4')dnl" >> /etc/mail/sendmail.mc
-RUN sendmailconfig
-RUN service sendmail restart
+ADD postfix-run /etc/service/postfix/run
 
 ADD nginx-http.conf /etc/nginx/conf.d/http.conf
 ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
