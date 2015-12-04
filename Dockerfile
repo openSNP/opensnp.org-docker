@@ -9,7 +9,7 @@ RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set
 RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 postfix
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD postfix-run /etc/service/postfix/run
+ADD start_postfix.sh /etc/my_init.d/91_start_postfix.sh
 
 ADD nginx-http.conf /etc/nginx/conf.d/http.conf
 ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
