@@ -13,7 +13,10 @@ ADD start_postfix.sh /etc/my_init.d/91_start_postfix.sh
 
 ADD nginx-http.conf /etc/nginx/conf.d/http.conf
 ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
-RUN sed -i "s/# gzip/gzip/" /etc/nginx/nginx.conf
+RUN sed -i "s/# gzip_types/gzip_types/" /etc/nginx/nginx.conf
+RUN sed -i "s/# gzip_vary/gzip_vary/" /etc/nginx/nginx.conf
+RUN sed -i "s/# gzip_proxied/gzip_proxied/" /etc/nginx/nginx.conf
+
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
 
