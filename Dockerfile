@@ -16,6 +16,7 @@ ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
 RUN sed -i "s/# gzip_types/gzip_types/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_vary/gzip_vary/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_proxied/gzip_proxied/" /etc/nginx/nginx.conf
+RUN sed -i "s/# gzip_http/gzip_http/" /etc/nginx/nginx.conf
 
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
