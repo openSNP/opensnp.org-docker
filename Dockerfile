@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby22:0.9.17
+FROM phusion/passenger-ruby23:0.9.20
 
 ENV RAILS_ENV production
 
@@ -6,7 +6,7 @@ RUN apt-get -q update
 RUN apt-get -qy -o Dpkg::Options::="--force-confold" upgrade
 RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-RUN apt-get install -qy libhiredis-dev postgresql-client-9.3 postfix
+RUN apt-get install -qy libhiredis-dev postgresql-client-9.5 postfix
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN postconf -e myhostname=opensnp.org
