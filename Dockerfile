@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby23:0.9.20
+FROM phusion/passenger-ruby23:0.9.21
 
 ENV RAILS_ENV production
 
