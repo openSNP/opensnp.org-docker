@@ -33,7 +33,7 @@ USER app
 
 ADD database.yml config/database.yml
 RUN bundle install --deployment --without test development
-RUN cp .env.example .env
+RUN cp .env.development .env
 RUN bundle exec rake assets:precompile
 RUN rm .env
 
