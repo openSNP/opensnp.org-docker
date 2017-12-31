@@ -26,6 +26,7 @@ ADD db_migrate.sh /etc/my_init.d/90_db_migrate.sh
 
 RUN git clone --depth=1 https://github.com/openSNP/snpr.git /home/app/snpr
 WORKDIR /home/app/snpr
+RUN git rev-parse HEAD > RELEASE
 RUN rm -rf .git
 RUN chown app:app -R /home/app
 
