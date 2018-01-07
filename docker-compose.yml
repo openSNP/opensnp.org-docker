@@ -3,6 +3,7 @@ version: '3'
 services:
   rails:
     build: '.'
+    image: 'opensnp/rails'
     ports:
       - '8080:80'
     volumes:
