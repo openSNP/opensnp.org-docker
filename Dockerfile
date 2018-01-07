@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby24:0.9.27
+FROM phusion/passenger-customizable:0.9.27
 
 ENV RAILS_ENV production
 
@@ -6,7 +6,7 @@ RUN apt-get -q update
 RUN apt-get -qy -o Dpkg::Options::="--force-confold" upgrade
 RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-RUN apt-get install -qy libhiredis-dev postgresql-client-9.5 postfix imagemagick tzdata
+RUN apt-get install -qy libhiredis-dev postgresql-client-9.5 postfix imagemagick tzdata libpq-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN postconf -e myhostname=opensnp.org
@@ -30,12 +30,16 @@ RUN git rev-parse HEAD > REVISION
 RUN rm -rf .git
 RUN chown app:app -R /home/app
 
+RUN /usr/local/rvm/bin/rvm install $(cat .ruby-version)
+RUN /usr/local/rvm/bin/rvm alias create default $(cat .ruby-version)
+
 USER app
 
 ADD database.yml config/database.yml
-RUN bundle install --deployment --without test development
+RUN bash -l -c 'gem install bundler'
+RUN bash -l -c 'bundle install --jobs=4 --deployment --without test development'
 RUN cp .env.development .env
-RUN bundle exec rake assets:precompile
+RUN bash -l -c 'bundle exec rake assets:precompile'
 RUN rm .env
 
 USER root
