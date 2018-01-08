@@ -28,6 +28,29 @@ services:
       SURVEY_EMAIL_ADDRESS: foobar
       SURVEY_EMAIL_PORT: foobar
 
+  sidekiq:
+    build: './sidekiq'
+    image: 'opensnp/rails-sidekiq'
+    environment:
+      POSTGRES_URL: 'postgres://postgres@postgres/opensnp'
+      REDIS_URL: 'redis://redis'
+      SECRET_KEY_BASE: foo
+      SECRET_TOKEN: bar
+      PLOS_API_KEY: foo
+      RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+      RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+      MENDELEY_CONSUMER_KEY: foo
+      ERRBIT_API_KEY: foo
+      ERRBIT_HOST: localhost
+      OH_CLIENT_ID: foo
+      OH_CLIENT_SECRET: bar
+      SENTRY_DSN: foo
+      SENTRY_RELEASE_WEBHOOK: http://example.com/
+      SURVEY_EMAIL_USER: foobar
+      SURVEY_EMAIL_PASSWORD: foobar
+      SURVEY_EMAIL_ADDRESS: foobar
+      SURVEY_EMAIL_PORT: foobar
+
   postgres:
     image: 'postgres:9.3'
     volumes:

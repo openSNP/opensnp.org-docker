@@ -6,5 +6,5 @@ RUN touch /etc/service/nginx/down
 ADD sidekiq-run /etc/service/sidekiq/run
 
 USER app
-RUN bundle exec whenever --update-crontab
+RUN bash -l -c 'bundle exec whenever --update-crontab'
 USER root
