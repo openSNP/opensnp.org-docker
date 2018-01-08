@@ -19,6 +19,6 @@ do
 done
 
 docker-compose rm -sfv
-rm -rf $POSTGRES_DATA_DIR
+sudo rm -rf $POSTGRES_DATA_DIR
 
 exit $status
