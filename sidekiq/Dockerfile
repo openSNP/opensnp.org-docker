@@ -7,4 +7,8 @@ ADD sidekiq-run /etc/service/sidekiq/run
 
 USER app
 RUN bash -l -c 'bundle exec whenever --update-crontab'
+RUN bash -l -c 'cd $(bundle show recommendify); \
+                bundle install --path /tmp/recommendify-bundle; \
+                bundle exec rake build_native; \
+                rm -rf /tmp/recommendify-bundle'
 USER root
