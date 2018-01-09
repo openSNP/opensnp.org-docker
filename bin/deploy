@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+docker push opensnp/rails;
+docker push opensnp/rails-sidekiq;
