@@ -24,6 +24,10 @@ RUN rm -f /etc/service/nginx/down
 
 ADD db_migrate.sh /etc/my_init.d/90_db_migrate.sh
 
+# If `--build-arg SNPR_REV=<commit>` is given and hasn't been built before,
+# rebuild from here.
+ARG SNPR_REV=ignore
+
 RUN git clone --depth=1 https://github.com/openSNP/snpr.git /home/app/snpr
 WORKDIR /home/app/snpr
 RUN git rev-parse HEAD > REVISION

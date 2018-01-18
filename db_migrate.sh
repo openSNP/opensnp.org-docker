@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd /home/app/webapp
-chpst -u app bundle exec rake db:migrate
+chpst -U app bundle exec rake db:migrate
