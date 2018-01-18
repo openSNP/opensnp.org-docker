@@ -3,12 +3,8 @@ FROM opensnp/rails
 RUN mkdir /var/run/sidekiq
 RUN chown app:app /var/run/sidekiq
 RUN touch /etc/service/nginx/down
-ADD sidekiq-run /etc/service/sidekiq/run
-
+ADD sidekiq-run /etc/my_init.d/92_sidekiq.sh
 USER app
 RUN bash -l -c 'bundle exec whenever --update-crontab'
-RUN bash -l -c 'cd $(bundle show recommendify); \
-                bundle install --path /tmp/recommendify-bundle; \
-                bundle exec rake build_native; \
-                rm -rf /tmp/recommendify-bundle'
+RUN bash -l bin/build_native_recommendify
 USER root
