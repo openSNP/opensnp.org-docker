@@ -5,6 +5,7 @@ POSTGRES_DATA_DIR=test/postgres-data
 set -x
 
 mkdir $POSTGRES_DATA_DIR
+docker-compose build --build-arg SNPR_REV=$SNPR_REV
 docker-compose up -d
 
 i=10
