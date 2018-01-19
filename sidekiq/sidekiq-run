@@ -2,4 +2,4 @@
 
 cd /home/app/snpr
 exec 2>&1
-exec chpst -U app:app bundle exec sidekiq -e production -P /var/run/sidekiq/sidekiq.pid
+exec bash -l -c 'chpst -u app bundle exec sidekiq -e production -P /var/run/sidekiq/sidekiq.pid'

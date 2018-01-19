@@ -5,6 +5,13 @@ POSTGRES_DATA_DIR=test/postgres-data
 set -x
 
 mkdir $POSTGRES_DATA_DIR
+
+snpr_rev="$SNPR_REV"
+if [ -z "$snpr_rev" ]; then
+  snpr_rev=$(git ls-remote https://github.com/opensnp/snpr master | cut -f 1)
+fi
+
+docker-compose build --build-arg SNPR_REV=$snpr_rev rails
 docker-compose up -d
 
 i=10
