@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 
 cd /home/app/webapp
-chpst -U app bundle exec rake db:migrate
+exec 2>&1
+exec bash -l -c 'chpst -u app bundle exec rake db:migrate'
