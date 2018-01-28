@@ -12,8 +12,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN postconf -e myhostname=opensnp.org
 ADD start_postfix.sh /etc/my_init.d/91_start_postfix.sh
 
-ADD nginx-http.conf /etc/nginx/conf.d/http.conf
-ADD nginx-opensnp.org.conf /etc/nginx/sites-enabled/opensnp.org.conf
+ADD nginx /etc/nginx
 RUN sed -i "s/# gzip_types/gzip_types/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_vary/gzip_vary/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_proxied/gzip_proxied/" /etc/nginx/nginx.conf
