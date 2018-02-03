@@ -3,7 +3,7 @@
 set -e
 
 TARGET_CRT_FILE='/etc/ssl/certs/opensnp.org.crt'
-DEHYDRATED_DIR='$DEHYDRATED_DIR'
+DEHYDRATED_DIR='/tmp/dehydrated'
 
 if [ ! -f $TARGET_CRT_FILE ]; then
   echo "No certificate found to renew."
