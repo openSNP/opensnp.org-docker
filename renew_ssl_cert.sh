@@ -4,6 +4,7 @@ set -e
 
 TARGET_CRT_FILE='/etc/ssl/certs/opensnp.org.crt'
 DEHYDRATED_DIR='/tmp/dehydrated'
+WELLKNOWN_DIR='/home/app/snpr/public/.well-known/acme-challenge'
 
 if [ ! -f $TARGET_CRT_FILE ]; then
   echo "No certificate found to renew."
@@ -24,10 +25,10 @@ cd $DEHYDRATED_DIR
 git checkout tags/v0.4.0
 
 cp docs/examples/config config
-mkdir -p /home/app/snpr/public/.well-known/acme-challenge
+mkdir -p $WELLKNOWN_DIR
 
 # by default, WELLKNOWN is commented out, so just set the variable
-echo 'WELLKNOWN=/home/app/snpr/public/.well-known/acme-challenge' >> config
+echo "WELLKNOWN=$WELLKNOWN_DIR" >> config
 
 echo 'opensnp.org www.opensnp.org' > domains.txt
 
@@ -38,9 +39,9 @@ echo 'Starting dehydrated...'
 
 echo 'Done, now copying keys'
 cp /etc/ssl/private/opensnp.org.key /etc/ssl/private/opensnp.org.key.old
-cp /home/dehydrated/certs/opensnp.org/privkey.pem /etc/ssl/private/opensnp.org.key
+cp $DEHYDRATED_DIR/certs/opensnp.org/privkey.pem /etc/ssl/private/opensnp.org.key
 cp $TARGET_CRT_FILE $TARGET_CRT_FILE.old
-cp /home/dehydrated/certs/opensnp.org/fullchain.pem $TARGET_CRT_FILE
+cp $DEHYDRATED_DIR/certs/opensnp.org/fullchain.pem $TARGET_CRT_FILE
 
 service nginx restart
 
