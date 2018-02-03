@@ -5,6 +5,11 @@ set -e
 TARGET_CRT_FILE='/etc/ssl/certs/opensnp.org.crt'
 DEHYDRATED_DIR='$DEHYDRATED_DIR'
 
+if [ ! -f $TARGET_CRT_FILE ]; then
+  echo "No certificate found to renew."
+  exit 0
+fi
+
 expiration_date=$(openssl x509 -enddate -noout -in $TARGET_CRT_FILE | cut -d = -f 2)
 days_until_expiration=$(( ($(date -d "$expiration_date" +%s) - $(date +%s)) / (60*60*24) ))
 
