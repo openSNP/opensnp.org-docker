@@ -13,7 +13,6 @@ fi
 expiration_date=$(openssl x509 -enddate -noout -in $TARGET_CRT_FILE | cut -d = -f 2)
 days_until_expiration=$(( ($(date -d "$expiration_date" +%s) - $(date +%s)) / (60*60*24) ))
 
-echo $days_until_expiration
 if [ $days_until_expiration -gt 10 ]; then
   echo 'Plenty of time to renew, exiting.'
   exit 0
