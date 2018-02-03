@@ -21,7 +21,9 @@ RUN sed -i "s/# gzip_http/gzip_http/" /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
 
-ADD db_migrate.sh /etc/my_init.d/90_db_migrate.sh
+COPY renew_ssl_cert.sh /usr/local/bin/renew_ssl_cert.sh
+COPY renew_ssl_cert.cron /etc/cron.d/renew_ssl_cert
+COPY db_migrate.sh /etc/my_init.d/90_db_migrate.sh
 
 # If SNPR_REV changed, re-evaluate from here.
 ARG SNPR_REV
