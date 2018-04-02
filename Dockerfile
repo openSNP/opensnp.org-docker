@@ -39,6 +39,7 @@ RUN /usr/local/rvm/bin/rvm alias create default $(cat .ruby-version)
 
 USER app
 
+ADD irbrc /home/app/.irbrc
 ADD database.yml config/database.yml
 RUN bash -l -c 'gem install bundler'
 RUN bash -l -c 'bundle install --jobs=4 --deployment --without test development'
