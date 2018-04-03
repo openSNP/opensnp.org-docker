@@ -2,4 +2,5 @@
 
 cd /home/app/snpr
 exec 2>&1
+umask 133
 exec bash -l -c 'chpst -u app bundle exec sidekiq -e production -P /var/run/sidekiq/sidekiq.pid'

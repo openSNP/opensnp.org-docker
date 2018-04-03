@@ -13,6 +13,7 @@ RUN postconf -e myhostname=opensnp.org
 ADD start_postfix.sh /etc/my_init.d/91_start_postfix.sh
 
 ADD nginx /etc/nginx
+ADD nginx-run /etc/service/nginx/run
 RUN sed -i "s/# gzip_types/gzip_types/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_vary/gzip_vary/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_proxied/gzip_proxied/" /etc/nginx/nginx.conf
