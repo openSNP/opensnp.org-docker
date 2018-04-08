@@ -55,7 +55,7 @@ services:
       SURVEY_EMAIL_PORT: foobar
 
   postgres:
-    image: 'postgres:9.3'
+    image: 'postgres:9.5'
     volumes:
       - './test/postgres-data:/var/lib/postgresql/data'
 
