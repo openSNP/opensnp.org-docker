@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-POSTGRES_DATA_DIR=test/postgres-data
-
 set -x
-
-mkdir $POSTGRES_DATA_DIR
 
 snpr_rev="$SNPR_REV"
 if [ -z "$snpr_rev" ]; then
@@ -14,18 +10,11 @@ fi
 docker-compose build --build-arg SNPR_REV=$snpr_rev rails
 docker-compose up -d
 
-i=10
-while
-  docker exec -ti opensnporgdocker_rails_1 bash -l -c 'bundle exec rake db:reset'
-  curl -sf "http://localhost:8080/" > /dev/null
-  status=$?
-  [ $status -ne 0 -a $i -gt 0 ]
-do
-  sleep 1
-  i=$((i-1))
-done
+docker exec -ti docker_rails_1 bash -l -c 'bundle exec rake db:reset'
+
+wget -O - --retry-connrefused -T 60 http://${HOST:-localhost}:8080/
+status=$?
 
 docker-compose rm -sfv
-sudo rm -rf $POSTGRES_DATA_DIR
 
 exit $status

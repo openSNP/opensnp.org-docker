@@ -12,7 +12,7 @@ services:
     volumes:
       - './test/ssl:/etc/ssl'
     environment:
-      POSTGRES_URL: 'postgres://postgres@postgres/opensnp'
+      POSTGRES_URL: 'postgresql://postgres:mysecretpassword@postgres/postgres'
       REDIS_URL: 'redis://redis'
       SECRET_KEY_BASE: foo
       SECRET_TOKEN: bar
@@ -30,6 +30,7 @@ services:
       SURVEY_EMAIL_PASSWORD: foobar
       SURVEY_EMAIL_ADDRESS: foobar
       SURVEY_EMAIL_PORT: foobar
+      USER_DATA_SECRET_KEY: foobar
 
   sidekiq:
     build: './sidekiq'
@@ -56,8 +57,6 @@ services:
 
   postgres:
     image: 'postgres:9.5'
-    volumes:
-      - './test/postgres-data:/var/lib/postgresql/data'
 
   redis:
     image: 'redis:2.8'
