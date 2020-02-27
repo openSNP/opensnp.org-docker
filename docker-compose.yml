@@ -54,6 +54,7 @@ services:
       SURVEY_EMAIL_PASSWORD: foobar
       SURVEY_EMAIL_ADDRESS: foobar
       SURVEY_EMAIL_PORT: foobar
+      USER_DATA_SECRET_KEY: foobar
 
   postgres:
     image: 'postgres:9.5'
