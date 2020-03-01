@@ -23,6 +23,7 @@ RUN rm -f /etc/service/nginx/down
 
 COPY renew_ssl_cert.sh /usr/local/bin/renew_ssl_cert.sh
 COPY renew_ssl_cert.cron /etc/cron.d/renew_ssl_cert
+RUN chmod 600 /etc/cron.d/renew_ssl_cert
 COPY db_migrate.sh /etc/my_init.d/90_db_migrate.sh
 
 # If SNPR_REV changed, re-evaluate from here.
