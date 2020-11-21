@@ -2,11 +2,12 @@ FROM phusion/passenger-customizable:0.9.35
 
 ENV RAILS_ENV production
 
+RUN add-apt-repository ppa:certbot/certbot
 RUN apt-get -q update
 RUN apt-get -qy -o Dpkg::Options::="--force-confold" upgrade
 RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-RUN apt-get install -qy libhiredis-dev postgresql-client-9.5 postfix imagemagick tzdata libpq-dev
+RUN apt-get install -qy libhiredis-dev postgresql-client-9.5 postfix imagemagick tzdata libpq-dev certbot python-certbot-nginx
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN postconf -e myhostname=opensnp.org
@@ -21,9 +22,6 @@ RUN sed -i "s/# gzip_http/gzip_http/" /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-enabled/default
 RUN rm -f /etc/service/nginx/down
 
-COPY renew_ssl_cert.sh /usr/local/bin/renew_ssl_cert.sh
-COPY renew_ssl_cert.cron /etc/cron.d/renew_ssl_cert
-RUN chmod 600 /etc/cron.d/renew_ssl_cert
 COPY db_migrate.sh /etc/my_init.d/90_db_migrate.sh
 
 # If SNPR_REV changed, re-evaluate from here.

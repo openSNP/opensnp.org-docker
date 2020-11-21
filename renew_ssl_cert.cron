@@ -1,3 +1,0 @@
-MAILTO=''
-
-0 0 * * *  root  /usr/local/bin/renew_ssl_cert.sh 2>&1 | xargs echo "$(date):" >> /var/log/renew_ssl_cert.log
