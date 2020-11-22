@@ -11,8 +11,9 @@ services:
       - '8080:80'
     volumes:
       - './test/ssl:/etc/ssl'
+      - './test/letsencrypt:/etc/letsencrypt'
     environment:
-      POSTGRES_URL: 'postgresql://postgres:mysecretpassword@postgres/postgres'
+      POSTGRES_URL: 'postgresql://postgres:mysecretpassword@postgres/snpr'
       REDIS_URL: 'redis://redis'
       SECRET_KEY_BASE: foo
       SECRET_TOKEN: bar
