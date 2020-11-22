@@ -13,7 +13,7 @@ services:
       - './test/ssl:/etc/ssl'
       - './test/letsencrypt:/etc/letsencrypt'
     environment:
-      POSTGRES_URL: 'postgresql://postgres:mysecretpassword@postgres/snpr'
+      POSTGRES_URL: 'postgres://opensnp@postgres/opensnp'
       REDIS_URL: 'redis://redis'
       SECRET_KEY_BASE: foo
       SECRET_TOKEN: bar
@@ -37,7 +37,7 @@ services:
     build: './sidekiq'
     image: 'opensnp/rails-sidekiq'
     environment:
-      POSTGRES_URL: 'postgres://postgres@postgres/opensnp'
+      POSTGRES_URL: 'postgres://opensnp@postgres/opensnp'
       REDIS_URL: 'redis://redis'
       SECRET_KEY_BASE: foo
       SECRET_TOKEN: bar
@@ -61,6 +61,7 @@ services:
     image: 'postgres:9.5'
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: opensnp
 
   redis:
     image: 'redis:2.8'
