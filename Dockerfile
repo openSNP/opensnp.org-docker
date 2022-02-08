@@ -1,4 +1,4 @@
-FROM phusion/passenger-customizable:0.9.35
+FROM phusion/passenger-customizable:1.0.0
 
 ENV RAILS_ENV production
 
