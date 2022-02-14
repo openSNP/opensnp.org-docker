@@ -2,13 +2,22 @@ FROM phusion/passenger-customizable:1.0.0
 
 ENV RAILS_ENV production
 
-RUN add-apt-repository ppa:certbot/certbot
+# Update things
+RUN update-ca-certificates
 RUN apt-get -q update
 RUN apt-get -qy -o Dpkg::Options::="--force-confold" upgrade
+RUN snap install core
+RUN snap refresh core
+
+# Configure things
 RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
+
+# Install things
 RUN apt-get install -qy libhiredis-dev postgresql-client-9.5 postfix imagemagick tzdata libpq-dev certbot python-certbot-nginx
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN snap install --classic certbot
+RUN ln -s /snap/bin/certbot /usr/bin/certbot
 
 RUN postconf -e myhostname=opensnp.org
 ADD start_postfix.sh /etc/my_init.d/91_start_postfix.sh
