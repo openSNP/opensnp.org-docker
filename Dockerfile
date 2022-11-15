@@ -6,7 +6,7 @@ RUN apt-get -q update
 RUN apt-get -qy -o Dpkg::Options::="--force-confold" upgrade
 RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
 RUN echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-RUN apt-get install -qy libhiredis-dev postgresql-client postfix imagemagick tzdata libpq-dev certbot shared-mime-info
+RUN apt-get install -qy libhiredis-dev postgresql-client postfix imagemagick tzdata libpq-dev certbot shared-mime-info python3-certbot-nginx
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN postconf -e myhostname=opensnp.org
