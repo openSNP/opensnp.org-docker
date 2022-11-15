@@ -7,6 +7,8 @@ if [ -z "$snpr_rev" ]; then
   snpr_rev=$(git ls-remote https://github.com/opensnp/snpr master | cut -f 1)
 fi
 
+docker-compose kill
+docker-compose rm rails
 docker-compose build --build-arg SNPR_REV=$snpr_rev rails
 docker-compose up -d
 
