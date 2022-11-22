@@ -12,7 +12,7 @@ docker-compose rm rails
 docker-compose build --build-arg SNPR_REV=$snpr_rev rails
 docker-compose up -d
 
-docker exec -ti docker_rails_1 bash -l -c 'bundle exec rake db:reset'
+docker-compose exec rails bash -l -c 'bundle exec rake db:reset'
 
 wget -O - --retry-connrefused -T 60 http://${HOST:-localhost}:8080/
 status=$?
