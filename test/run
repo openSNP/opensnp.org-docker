@@ -8,8 +8,8 @@ if [ -z "$snpr_rev" ]; then
 fi
 
 docker-compose kill
-docker-compose rm rails
-docker-compose build --build-arg SNPR_REV=$snpr_rev rails
+docker-compose rm rails sidekiq
+docker-compose build --build-arg SNPR_REV=$snpr_rev rails sidekiq
 docker-compose up -d
 
 docker-compose exec rails bash -l -c 'bundle exec rake db:reset'
