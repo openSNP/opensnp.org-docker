@@ -10,9 +10,9 @@ RUN apt-get install -qy libhiredis-dev postgresql-client postfix imagemagick tzd
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN postconf -e myhostname=opensnp.org
-ADD start_postfix.sh /etc/my_init.d/91_start_postfix.sh
+COPY postfix /etc/service/postfix/run
 
-ADD nginx /etc/nginx
+COPY nginx /etc/nginx
 RUN sed -i "s/# gzip_types/gzip_types/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_vary/gzip_vary/" /etc/nginx/nginx.conf
 RUN sed -i "s/# gzip_proxied/gzip_proxied/" /etc/nginx/nginx.conf
@@ -38,8 +38,8 @@ RUN /usr/local/rvm/bin/rvm alias create default $(cat .ruby-version)
 
 USER app
 
-ADD irbrc /home/app/.irbrc
-ADD database.yml config/database.yml
+COPY irbrc /home/app/.irbrc
+COPY database.yml config/database.yml
 RUN bash -l -c 'gem install bundler'
 RUN bash -l -c 'bundle install --jobs=4 --deployment --without test development'
 RUN cp .env.development .env
