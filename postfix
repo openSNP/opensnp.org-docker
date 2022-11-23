@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec /usr/lib/postfix/sbin/master
+
