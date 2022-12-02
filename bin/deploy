@@ -1,5 +1,8 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-docker login
+set -x
+
+bin/build
+
 docker push opensnp/rails
 docker push opensnp/rails-sidekiq
