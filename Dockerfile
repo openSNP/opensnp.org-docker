@@ -26,10 +26,14 @@ COPY db_migrate.sh /etc/my_init.d/90_db_migrate.sh
 # If SNPR_REV changed, re-evaluate from here.
 ARG SNPR_REV
 
-RUN git clone --depth=1 https://github.com/openSNP/snpr.git /home/app/snpr
+RUN git clone https://github.com/openSNP/snpr /home/app/snpr && \
+    cd /home/app/snpr && \
+    git checkout $SNPR_REV && \
+    git rev-parse HEAD > REVISION && \
+    rm -rf .git
+
 WORKDIR /home/app/snpr
-RUN git rev-parse HEAD > REVISION
-RUN rm -rf .git
+
 RUN chown app:app -R /home/app
 
 RUN /usr/local/rvm/bin/rvm install $(cat .ruby-version)

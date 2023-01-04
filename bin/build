@@ -7,5 +7,6 @@ if [ -z "$snpr_rev" ]; then
   snpr_rev=$(git ls-remote https://github.com/opensnp/snpr master | cut -f 1)
 fi
 
+echo "Building with git ref: $snpr_rev"
 docker-compose build --build-arg SNPR_REV=$snpr_rev rails
 docker-compose build sidekiq
