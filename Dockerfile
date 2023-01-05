@@ -2,6 +2,8 @@ FROM phusion/passenger-customizable:2.3.1
 
 ENV RAILS_ENV production
 
+RUN usermod -a -G docker_env app
+
 RUN apt-get -q update
 RUN apt-get -qy -o Dpkg::Options::="--force-confold" upgrade
 RUN echo 'postfix postfix/mailname string opensnp.org' | debconf-set-selections
